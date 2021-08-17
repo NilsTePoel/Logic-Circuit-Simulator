@@ -1,0 +1,22 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit test framework.
+    testImplementation 'junit:junit:4.13.1'
+
+    // Processing library
+    implementation files('core.jar')
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'logicsimulator.LogicSimulator'
+}
