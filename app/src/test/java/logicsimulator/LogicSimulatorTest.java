@@ -294,7 +294,7 @@ public class LogicSimulatorTest {
         assertEquals("Invalid boolean function", "", c.getGateAt(new Point(1, 0)).getBooleanFunction());
     }
 
-    // Aufbau eines Exklusiv-Oder-Gatters testen (Ausgangswert ist nur "true", wenn genau ein Eingang den Wert "true" hat)
+    // Aufbau eines Exklusiv-Oder-Gatters aus Grundgattern testen (Ausgangswert ist nur "true", wenn genau ein Eingang den Wert "true" hat)
     @Test public void testExclusiveOr() {
         c.setSelectedType(GateType.INPUT).addGates(new Point(0, 0), new Point(0, 1));
         c.setSelectedType(GateType.NOT).addGates(new Point(1, 0), new Point(1, 1));
@@ -320,7 +320,7 @@ public class LogicSimulatorTest {
         assertEquals("Invalid boolean function", "f1 = (a ^ (!b)) v (b ^ (!a))", c.getBooleanFunctions().orElseThrow());
     }
 
-    // Aufbau eines Halbaddierers testen
+    // Aufbau eines Halbaddierers aus Grundgattern testen
     // (Addiert zwei einstellige Binärzahlen; f1: Summe; f2: Übertrag)
     @Test public void testHalfAdder() {
         c.setSelectedType(GateType.INPUT);
