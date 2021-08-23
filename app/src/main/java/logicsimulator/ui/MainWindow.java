@@ -2,9 +2,13 @@ package logicsimulator.ui;
 
 import logicsimulator.core.LogicCircuit;
 import logicsimulator.core.Point;
+import logicsimulator.core.TableOfValues;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static logicsimulator.ui.GateSelectionWindow.WINDOW_WIDTH;
@@ -17,7 +21,8 @@ public class MainWindow {
     public static final int TILE_SIZE = 60;
 
     private int xOffset, yOffset;
-    private long errorMessageDuration;
+    private String message;
+    private long messageDuration;
 
     public MainWindow(PGraphics g, LogicCircuit circuit, DrawableGate drawableGate) {
         this.g = g;
@@ -58,10 +63,10 @@ public class MainWindow {
     }
 
     private void drawErrorMessage(int width) {
-        if (System.currentTimeMillis() < errorMessageDuration) {
+        if (System.currentTimeMillis() < messageDuration) {
             g.textSize(18);
             g.fill(colorRed);
-            g.text("Verbindung nicht m\u00F6glich.", width / 2F, 20);
+            g.text(message, width / 2F, 20);
         }
     }
 
@@ -71,7 +76,8 @@ public class MainWindow {
             if (mouseButton == PConstants.LEFT && !circuit.addGate(pos)) {
                 circuit.toggleSelection(pos);
             } else if (mouseButton == PConstants.RIGHT && !circuit.interactWith(pos)) {
-                errorMessageDuration = System.currentTimeMillis() + 2000;
+                message = "Verbindung nicht m\u00F6glich.";
+                messageDuration = System.currentTimeMillis() + 2000;
             }
         }
     }
@@ -81,6 +87,14 @@ public class MainWindow {
             circuit.removeSelectedGate();
         } else if (key == 'm') {
             xOffset = yOffset = 0;
+        } else if (key == 'v') {
+            Optional<TableOfValues> table = circuit.getTableOfValues();
+            if (table.isPresent()) {
+                Toolkit.getDefaultToolkit().getSystemClipboard()
+                        .setContents(new StringSelection(table.get().toString()), null);
+                message = "Wertetabelle in die Zwischenablage kopiert.";
+                messageDuration = System.currentTimeMillis() + 2000;
+            }
         } else if (key == PConstants.CODED) {
             switch (keyCode) {
                 case PConstants.UP -> yOffset--;

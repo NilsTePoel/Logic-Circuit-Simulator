@@ -24,4 +24,5 @@ public interface LogicCircuit {
     void removeSelectedGate();
 
     Optional<String> getBooleanFunctions();
+    Optional<TableOfValues> getTableOfValues();
 }

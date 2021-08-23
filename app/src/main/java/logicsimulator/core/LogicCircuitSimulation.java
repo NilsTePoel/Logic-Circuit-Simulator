@@ -4,6 +4,7 @@ import logicsimulator.core.gate.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LogicCircuitSimulation implements LogicCircuit {
     private final Map<Point, Gate> gates = new HashMap<>();
@@ -124,6 +125,51 @@ public class LogicCircuitSimulation implements LogicCircuit {
                 .sorted(Comparator.comparing(gate -> gate.getName().orElseThrow()))
                 .map(Gate::getBooleanFunction).collect(Collectors.joining("; "));
         return Optional.of(booleanFunctions);
+    }
+
+    public Optional<TableOfValues> getTableOfValues() {
+        if (selectedPos == null) return Optional.empty();
+
+        List<Point> inputPositions = gates.keySet().stream()
+                .filter(pos -> getGateAt(pos).getType() == GateType.INPUT)
+                .sorted(Comparator.comparing(pos -> getGateAt(pos).getName().orElseThrow())).toList();
+
+        // Bisherige Zustände der Eingänge merken, um sie am Ende wiederherzustellen
+        Map<Point, Boolean> inputStates = inputPositions.stream()
+                .collect(Collectors.toMap(pos -> pos, pos -> getGateAt(pos).getOutput()));
+
+        // Alle Eingänge auf "aus" setzen
+        inputPositions.stream().filter(pos -> getGateAt(pos).getOutput())
+                .forEach(pos -> gates.replace(pos, getGateAt(pos).toggleOutput()));
+
+        List<List<Boolean>> values = new ArrayList<>();
+        buildTableOfValues(inputPositions, values, 0);
+
+        // Bisherige Zustände der Eingänge wiederherstellen
+        inputPositions.stream().filter(pos -> getGateAt(pos).getOutput() != inputStates.get(pos))
+                .forEach(pos -> gates.replace(pos, getGateAt(pos).toggleOutput()));
+
+        List<String> names = Stream.concat(inputPositions.stream().map(pos -> getGateAt(pos).getName().orElseThrow()),
+                Stream.of(getGateAt(selectedPos).getBooleanFunction())).toList();
+
+        return Optional.of(new TableOfValues(values, names));
+    }
+
+    // Wertetabelle rekursiv aufbauen
+    private void buildTableOfValues(List<Point> inputPositions, List<List<Boolean>> values, int i) {
+        if (i == inputPositions.size()) {
+            List<Boolean> row = Stream.concat(inputPositions.stream().map(pos -> getGateAt(pos).getOutput()),
+                    Stream.of(getGateAt(selectedPos).getOutput())).toList();
+            values.add(row);
+        } else {
+            // Möglichkeit 1: Eingang an Position i ist ausgeschaltet
+            buildTableOfValues(inputPositions, values, i + 1);
+
+            // Möglichkeit 2: Eingang an Position i ist eingeschaltet
+            gates.replace(inputPositions.get(i), getGateAt(inputPositions.get(i)).toggleOutput());
+            buildTableOfValues(inputPositions, values, i + 1);
+            gates.replace(inputPositions.get(i), getGateAt(inputPositions.get(i)).toggleOutput());
+        }
     }
 
     @Override
