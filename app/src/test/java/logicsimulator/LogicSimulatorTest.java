@@ -3,6 +3,7 @@ package logicsimulator;
 import logicsimulator.core.LogicCircuit;
 import logicsimulator.core.LogicCircuitSimulation;
 import logicsimulator.core.Point;
+import logicsimulator.core.TableOfValues;
 import logicsimulator.core.gate.GateType;
 import org.junit.Before;
 import org.junit.Test;
@@ -428,5 +429,29 @@ public class LogicSimulatorTest {
         c.toggleSelection(new Point(1, 1)).interactWith(new Point(2, 1));
 
         assertEquals("Wrong boolean functions", "f1 = a ^ b; f2 = !c", c.getBooleanFunctions().orElseThrow());
+    }
+
+    // Erstellen einer Wertetabelle testen
+    @Test public void testTableOfValues() {
+        c.setSelectedType(GateType.INPUT).addGates(new Point(0, 0), new Point(0, 1), new Point(0, 2));
+        c.setSelectedType(GateType.AND).addGate(new Point(1, 0));
+        c.toggleSelection(new Point(0, 0)).interactWith(new Point(1, 0));
+        c.toggleSelection(new Point(0, 1)).interactWith(new Point(1, 0));
+        c.setSelectedType(GateType.EXCLUSIVE_OR).addGate(new Point(2, 0));
+        c.toggleSelection(new Point(1, 0)).interactWith(new Point(2, 0));
+        c.toggleSelection(new Point(0, 2)).interactWith(new Point(2, 0));
+        c.setSelectedType(GateType.OUTPUT).addGate(new Point(3, 0));
+        c.toggleSelection(new Point(2, 0)).interactWith(new Point(3, 0));
+
+        List<List<Boolean>> expectedValues = List.of(List.of(false, false, false, false),
+                                                     List.of(false, false, true, true),
+                                                     List.of(false, true, false, false),
+                                                     List.of(false, true, true, true),
+                                                     List.of(true, false, false, false),
+                                                     List.of(true, false, true, true),
+                                                     List.of(true, true, false, true),
+                                                     List.of(true, true, true, false));
+        TableOfValues expectedTable = new TableOfValues(expectedValues, List.of("a", "b", "c", "(a ^ b) XOR c"));
+        assertEquals("Wrong table of values", expectedTable, c.getTableOfValues().orElseThrow());
     }
 }
