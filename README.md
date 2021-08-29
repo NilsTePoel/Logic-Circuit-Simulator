@@ -22,6 +22,8 @@ Die aufgebauten Schaltungen werden zusätzlich in einer Textschreibweise als sog
 
 ## Bedienung
 
+> Das Programm kann mit dem Befehl `gradle run` gestartet werden. Vor dem ersten Start muss die `core.jar`-Datei aus der Processing-Bibliothek in das `app`-Verzeichnis kopiert werden.
+
 Auf der linken Seite des Fensters kann man per Mausklick auswählen, welche Art von Logikgattern man aktuell verwenden will. Die ausgewählte Gatter-Art wird blau hervorgehoben. Alternativ kann man die Gatter auch mit den Tasten 1 bis 5 auswählen (dabei wählt "1" das Und-Gatter aus, "2" das Oder-Gatter usw.).
 
 Im Gitter rechts daneben werden dann die Gatter platziert, wobei sich in jedem Kästchen nur ein Gatter befinden kann. Zum Hinzufügen eines neuen Gatters klickt man mit der linken Maustaste auf ein leeres Feld. Die Auswahl aus dem letzten Abschnitt bestimmt dabei, welche Art von Gatter platziert wird.
@@ -45,5 +47,5 @@ In der hier verwendeten booleschen Schreibweise steht "^" für "Und", "v" für "
 
 ## Verwendete Bibliotheken
 
-* [Processing](https://processing.org/)
+* [Processing 3.5.4](https://processing.org/)
 * [JUnit 4](https://junit.org/junit4/)
