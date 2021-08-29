@@ -26,6 +26,7 @@ public class LogicSimulator extends PApplet {
     public void setup() {
         surface.setResizable(true);
         surface.setTitle("Logic Circuit Simulator");
+        surface.setIcon(loadImage("icon.png"));
         drawableGate = new DrawableGate(super.g, loadImage("enabled_output.png"));
         mainWindow = new MainWindow(super.g, circuit, drawableGate);
         gateSelectionWindow = new GateSelectionWindow(super.g, circuit, drawableGate);
