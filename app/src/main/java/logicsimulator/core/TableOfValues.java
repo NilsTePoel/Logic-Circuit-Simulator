@@ -2,10 +2,10 @@ package logicsimulator.core;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public record TableOfValues(List<List<Boolean>> values, List<String> names) {
-    @Override
-    public String toString() {
+    public String getTable() {
         StringBuilder s = new StringBuilder();
         String header = String.join(" | ", names);
         s.append(header).append("\n");
@@ -19,5 +19,23 @@ public record TableOfValues(List<List<Boolean>> values, List<String> names) {
         }
 
         return s.toString();
+    }
+
+    private String getMinterm(List<Boolean> valueRow) {
+        return IntStream.range(0, valueRow.size() - 1)
+                .mapToObj(i -> valueRow.get(i) ? names.get(i) : "!" + names.get(i))
+                .collect(Collectors.joining(" ^ "));
+    }
+
+    public String getDisjunctiveNormalForm() {
+        return values.stream().filter(valueRow -> valueRow.get(valueRow.size() - 1))
+                .map(this::getMinterm)
+                .map(minterm -> "(" + minterm + ")")
+                .collect(Collectors.joining(" v "));
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s\nDNF: %s", getTable(), getDisjunctiveNormalForm());
     }
 }

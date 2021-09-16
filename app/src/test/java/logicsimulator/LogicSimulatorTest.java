@@ -452,6 +452,10 @@ public class LogicSimulatorTest {
                                                      List.of(true, true, false, true),
                                                      List.of(true, true, true, false));
         TableOfValues expectedTable = new TableOfValues(expectedValues, List.of("a", "b", "c", "(a ^ b) XOR c"));
-        assertEquals("Wrong table of values", expectedTable, c.getTableOfValues().orElseThrow());
+        TableOfValues actualTable = c.getTableOfValues().orElseThrow();
+        assertEquals("Wrong table of values", expectedTable, actualTable);
+
+        String expectedDisjunctiveNormalForm = "(!a ^ !b ^ c) v (!a ^ b ^ c) v (a ^ !b ^ c) v (a ^ b ^ !c)";
+        assertEquals("Wrong disjunctive normal form", expectedDisjunctiveNormalForm, actualTable.getDisjunctiveNormalForm());
     }
 }
