@@ -30,7 +30,10 @@ Im Gitter rechts daneben werden dann die Gatter platziert, wobei sich in jedem K
 
 Klickt man mit der linken Maustaste auf ein besetztes Feld, wird das Gatter in diesem Feld ausgewählt und blau hervorgehoben. Klickt man auf ein schon ausgewähltes Gatter, wird die Auswahl wieder aufgehoben.
 
-Hat man ein Gatter ausgewählt, stehen zusätzliche Aktionen zur Verfügung: Klickt man jetzt mit der rechten Maustaste auf ein anderes Gatter, wird dieses Gatter mit dem ausgewählten Gatter verbunden (dargestellt durch eine Linie). Drückt man die Taste R, wird das ausgewählte Gatter und alle Verbindungen zu diesem entfernt. Wenn man die Taste V drückt, wird eine Wertetabelle für das ausgewählte Gatter erstellt und in die Zwischenablage kopiert.
+Hat man ein Gatter ausgewählt, stehen zusätzliche Aktionen zur Verfügung: Klickt man jetzt mit der rechten Maustaste auf ein anderes Gatter, wird dieses Gatter mit dem ausgewählten Gatter verbunden (dargestellt durch eine Linie). Drückt man die Taste R, wird das ausgewählte Gatter und alle Verbindungen zu diesem entfernt. Außerdem wird in der rechten oberen Fensterecke ein Menü eingeblendet, in dem zwei Funktionen zur Verfügung stehen:
+
+* Wertetabelle: Erstellt eine Wertetabelle für das ausgewählte Gatter und kopiert diese in die Zwischenablage.
+* Arduino-Sketch: Exportiert die zum ausgewählten Gatter gehörende logische Funktion als Arduino-Sketch. Damit kann man die Schaltung auch an einem Mikrokontroller ausprobieren (eine LED für den Ausgang, beliebig viele Knöpfe für die Eingänge). Die Pin-Belegung und die Anzahl der Knöpfe können in der Datei `arduino_sketch_template.txt` angepasst werden.
 
 Bei dieser Simulation sind nicht alle möglichen Verbindungen zwischen Gattern erlaubt: ein Gatter kann nicht (auch nicht über andere Gatter) mit sich selbst verbunden werden, da sonst die Darstellung als boolesche Funktion nicht möglich wäre.
 Daher lassen sich z. B. Flip-Flop-Speicherelemente nicht umsetzen. Versucht man, solche Verbindungen herzustellen, wird eine Fehlermeldung angezeigt.

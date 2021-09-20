@@ -134,6 +134,9 @@ public class LogicCircuitSimulation implements LogicCircuit {
                 .filter(pos -> getGateAt(pos).getType() == GateType.INPUT)
                 .sorted(Comparator.comparing(pos -> getGateAt(pos).getName().orElseThrow())).toList();
 
+        // Es soll nur eine Wertetabelle erstellt werden, wenn es mindestens einen Eingang gibt
+        if (inputPositions.isEmpty()) return Optional.empty();
+
         // Bisherige Zustände der Eingänge merken, um sie am Ende wiederherzustellen
         Map<Point, Boolean> inputStates = inputPositions.stream()
                 .collect(Collectors.toMap(pos -> pos, pos -> getGateAt(pos).getOutput()));

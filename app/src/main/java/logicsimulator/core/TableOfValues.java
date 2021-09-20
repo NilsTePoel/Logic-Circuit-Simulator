@@ -28,6 +28,9 @@ public record TableOfValues(List<List<Boolean>> values, List<String> names) {
     }
 
     public String getDisjunctiveNormalForm() {
+        // Ist der Funktionswert immer "falsch", soll "0" zurückgegeben werden, damit die Ausgabe gültig bleibt
+        if (values.stream().noneMatch(valueRow -> valueRow.get(valueRow.size() - 1))) return "0";
+
         return values.stream().filter(valueRow -> valueRow.get(valueRow.size() - 1))
                 .map(this::getMinterm)
                 .map(minterm -> "(" + minterm + ")")

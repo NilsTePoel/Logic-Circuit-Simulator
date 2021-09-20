@@ -35,12 +35,12 @@ public class LogicSimulator extends PApplet {
 
     public void draw() {
         background(colorWhite);
-        mainWindow.draw(width, height);
+        mainWindow.draw(width, height, mouseX, mouseY);
         gateSelectionWindow.draw(width, height, mouseX, mouseY);
     }
 
     public void mousePressed() {
-        mainWindow.onMousePressed(height, mouseX, mouseY, mouseButton);
+        mainWindow.onMousePressed(width, height, mouseX, mouseY, mouseButton);
         gateSelectionWindow.onMousePressed(mouseX, mouseY);
     }
 
