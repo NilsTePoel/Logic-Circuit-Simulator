@@ -24,6 +24,7 @@ public class LogicSimulator extends PApplet {
     }
 
     public void setup() {
+        frameRate(30);
         surface.setResizable(true);
         surface.setTitle("Logic Circuit Simulator");
         surface.setIcon(loadImage("icon.png"));
