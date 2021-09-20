@@ -36,6 +36,6 @@ public abstract class MultipleInputGate implements Gate {
 
     @Override
     public String toString() {
-        return String.format("%s [Output: %b] [Inputs: %s]", getBooleanFunction(), getOutput(), getInputs());
+        return "%s [Output: %b] [Inputs: %s]".formatted(getBooleanFunction(), getOutput(), getInputs());
     }
 }

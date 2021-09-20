@@ -25,6 +25,6 @@ public abstract class SingleInputGate implements Gate {
 
     @Override
     public String toString() {
-        return String.format("%s [Output: %b] [Input: %s]", getBooleanFunction(), getOutput(), getInputs());
+        return "%s [Output: %b] [Input: %s]".formatted(getBooleanFunction(), getOutput(), getInputs());
     }
 }

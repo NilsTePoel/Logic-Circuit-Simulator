@@ -36,6 +36,6 @@ public record TableOfValues(List<List<Boolean>> values, List<String> names) {
 
     @Override
     public String toString() {
-        return String.format("%s\nDNF: %s", getTable(), getDisjunctiveNormalForm());
+        return "%s\nDNF: %s".formatted(getTable(), getDisjunctiveNormalForm());
     }
 }

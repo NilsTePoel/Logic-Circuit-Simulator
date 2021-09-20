@@ -44,6 +44,6 @@ public class Input implements Gate {
 
     @Override
     public String toString() {
-        return String.format("%s [Output: %b]", getBooleanFunction(), getOutput());
+        return "%s [Output: %b]".formatted(getBooleanFunction(), getOutput());
     }
 }
