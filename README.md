@@ -51,4 +51,4 @@ In der hier verwendeten booleschen Schreibweise steht "^" für "Und", "v" für "
 ## Verwendete Bibliotheken
 
 * [Processing 3.5.4](https://processing.org/)
-* [JUnit 4](https://junit.org/junit4/)
+* [JUnit 5](https://junit.org/junit5/)
