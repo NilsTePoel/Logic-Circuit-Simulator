@@ -14,7 +14,7 @@ test {
 
 dependencies {
     // Use JUnit test framework.
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
 
     // Processing library
     implementation files('core.jar')
