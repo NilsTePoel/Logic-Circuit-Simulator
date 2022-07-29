@@ -18,6 +18,7 @@ public class Output extends SingleInputGate {
         outputName = oldGate.outputName;
     }
 
+    @Override
     public Gate addInput(Point pos) {
         return new Output(this, pos);
     }
@@ -31,6 +32,7 @@ public class Output extends SingleInputGate {
         return circuit.getGateAt(getInputs().get(0)).getOutput();
     }
 
+    @Override
     public Optional<String> getName() {
         return Optional.of(outputName);
     }

@@ -12,6 +12,7 @@ public class OrGate extends MultipleInputGate {
         super(oldGate, newPos);
     }
 
+    @Override
     public Gate addInput(Point pos) {
         return new OrGate(this, pos);
     }

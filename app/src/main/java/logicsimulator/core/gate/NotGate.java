@@ -12,6 +12,7 @@ public class NotGate extends SingleInputGate {
         super(oldGate, newPos);
     }
 
+    @Override
     public Gate addInput(Point pos) {
         return new NotGate(this, pos);
     }

@@ -12,7 +12,7 @@ public abstract class MultipleInputGate implements Gate {
     protected final LogicCircuit circuit;
     private final String symbol;
 
-    public MultipleInputGate(LogicCircuit circuit, String symbol) {
+    protected MultipleInputGate(LogicCircuit circuit, String symbol) {
         this.circuit = circuit;
         this.symbol = symbol;
     }

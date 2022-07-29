@@ -26,6 +26,7 @@ public class Input implements Gate {
         return output;
     }
 
+    @Override
     public Gate toggleOutput() {
         return new Input(inputName, !output);
     }
@@ -34,6 +35,7 @@ public class Input implements Gate {
         return List.of();
     }
 
+    @Override
     public Optional<String> getName() {
         return Optional.of(inputName);
     }

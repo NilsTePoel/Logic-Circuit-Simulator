@@ -7,13 +7,13 @@ import java.util.List;
 
 public abstract class SingleInputGate implements Gate {
     private Point input;
-    protected LogicCircuit circuit;
+    protected final LogicCircuit circuit;
 
-    public SingleInputGate(LogicCircuit circuit) {
+    protected SingleInputGate(LogicCircuit circuit) {
         this.circuit = circuit;
     }
 
-    public SingleInputGate(SingleInputGate oldGate, Point newPos) {
+    protected SingleInputGate(SingleInputGate oldGate, Point newPos) {
         this(oldGate.circuit);
         this.input = newPos;
     }

@@ -67,6 +67,9 @@ public class DrawableGate {
     }
 
     private int getGateColor(Gate gate, boolean isSelected) {
-        return isSelected ? colorBlue : (gate.getOutput() ? colorRed : colorBlack);
+        if (isSelected) {
+            return colorBlue;
+        }
+        return gate.getOutput() ? colorRed : colorBlack;
     }
 }

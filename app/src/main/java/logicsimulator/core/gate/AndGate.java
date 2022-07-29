@@ -12,6 +12,7 @@ public class AndGate extends MultipleInputGate {
         super(oldGate, newPos);
     }
 
+    @Override
     public Gate addInput(Point pos) {
         return new AndGate(this, pos);
     }

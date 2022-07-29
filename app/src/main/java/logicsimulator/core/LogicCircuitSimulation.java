@@ -11,8 +11,10 @@ public class LogicCircuitSimulation implements LogicCircuit {
     private GateType selectedType = GateType.AND;
     private Point selectedPos;
 
-    private int inputCounter = 0, outputCounter = 1;
+    private int inputCounter = 0;
     private char inputChar = 'a';
+
+    private int outputCounter = 1;
 
     public boolean addGate(Point pos) {
         if (pos == null) throw new IllegalArgumentException("position must not be null");
@@ -31,6 +33,7 @@ public class LogicCircuitSimulation implements LogicCircuit {
         return true;
     }
 
+    // Erzeugt Namen für die Eingänge nach folgendem Schema: a, ..., z, a1, ..., z1, ...
     private String generateInputName() {
         String inputName = String.valueOf(inputChar);
         if (inputCounter > 0) inputName += inputCounter;
@@ -42,6 +45,7 @@ public class LogicCircuitSimulation implements LogicCircuit {
         return inputName;
     }
 
+    // Erzeugt Namen für die Ausgange nach folgendem Schema: f1, f2, ...
     private String generateOutputName() {
         String outputName = "f" + outputCounter;
         outputCounter++;
@@ -69,6 +73,7 @@ public class LogicCircuitSimulation implements LogicCircuit {
     public LogicCircuit toggleSelection(Point pos) {
         if (pos == null || getGateAt(pos) == null) throw new IllegalArgumentException("invalid position");
         if (selectedPos != null && selectedPos.equals(pos)) {
+            // Position ist schon markiert → Markierung aufheben
             selectedPos = null;
         } else {
             selectedPos = pos;
@@ -89,6 +94,8 @@ public class LogicCircuitSimulation implements LogicCircuit {
         return !hasLoop(selectedPos, pos);
     }
 
+    // Prüft rekursiv, ob man durch die zusätzliche Verbindung ein Gatter (auch über andere Gatter)
+    // mit sich selbst verbinden würde
     private boolean hasLoop(Point pos, Point connectionPos) {
         Gate gate = getGateAt(pos);
         if (pos.equals(connectionPos)) return true;
@@ -96,16 +103,16 @@ public class LogicCircuitSimulation implements LogicCircuit {
         else return gate.getInputs().parallelStream().anyMatch(p -> hasLoop(p, connectionPos));
     }
 
-    // Eingangs-Gatter: Ausgangswert ändern
-    // Alle anderen Gatter: mit ausgewähltem Gatter verbinden
     public boolean interactWith(Point pos) {
         if (pos == null) throw new IllegalArgumentException("position must not be null");
         Gate gate = getGateAt(pos);
         if (gate != null) {
             if (gate.getType() == GateType.INPUT) {
+                // Eingangs-Gatter: Ausgangswert ändern
                 gates.replace(pos, gate.toggleOutput());
                 return true;
             } else if (isValidConnection(pos)) {
+                // Alle anderen Gatter: mit ausgewähltem Gatter verbinden
                 gates.replace(pos, gate.addInput(selectedPos));
                 return true;
             }

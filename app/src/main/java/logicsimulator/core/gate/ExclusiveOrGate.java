@@ -12,6 +12,7 @@ public class ExclusiveOrGate extends MultipleInputGate {
         super(oldGate, newPos);
     }
 
+    @Override
     public Gate addInput(Point pos) {
         return new ExclusiveOrGate(this, pos);
     }
